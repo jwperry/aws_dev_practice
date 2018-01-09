@@ -1,6 +1,6 @@
 provider "aws" {
-  access_key = #
-  secret_key = #
+  access_key = "../../secrets/plaintext/aws/terraform_dev_access_key"
+  secret_key = "../../secrets/plaintext/aws/terraform_dev_secret_key"
   region = "us-west-2"
 }
 
