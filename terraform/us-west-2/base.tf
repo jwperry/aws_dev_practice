@@ -8,7 +8,9 @@ resource "aws_instance" "dev-practice-02-jp" {
   ami = "ami-8803e0f0"
   instance_type = "t2.micro"
   subnet_id = "subnet-3baf2473"
+  availability_zone = "us-west-2b"
   vpc_security_group_ids = ["sg-d33271ae", "sg-a42c6fd9"]
+  associate_public_ip_address = "true"
   tags {
     Name = "dev-practice-02-jp",
     Owner = "JP"
