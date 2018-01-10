@@ -1,2 +1,6 @@
 # Secrets
 secrets/plaintext/*
+
+# Terraform
+terraform/**/.terraform*
+terraform/**/*tfstate*backup
