@@ -11,6 +11,7 @@ resource "aws_instance" "dev-practice-02-jp" {
   availability_zone = "us-west-2b"
   vpc_security_group_ids = ["sg-d33271ae", "sg-a42c6fd9"]
   associate_public_ip_address = "true"
+  key_name = "dev-practice-01-jp"
   tags {
     Name = "dev-practice-02-jp",
     Owner = "JP"
