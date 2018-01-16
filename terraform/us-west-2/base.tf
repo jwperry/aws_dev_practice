@@ -4,16 +4,39 @@ provider "aws" {
   region = "us-west-2"
 }
 
-resource "aws_instance" "dev-practice-02-jp" {
+resource "aws_key_pair" "dev-practice-jp-ssh" {
+  key_name   = "dev-practice-jp-ssh"
+  public_key = "${file("../../secrets/plaintext/ssh/dev-practice-jp.pub")}"
+}
+
+resource "aws_vpc" "dev-practice-jp-vpc" {
+  cidr_block = "172.16.0.0/16"
+  tags {
+    Name = "dev-practice-jp-vpc",
+    Owner = "JP"
+  }
+}
+
+resource "aws_subnet" "dev-practice-jp-subnet" {
+  vpc_id = "${aws_vpc.dev-practice-jp-vpc.id}"
+  cidr_block = "172.16.10.0/24"
+  availability_zone = "us-west-2a"
+  tags {
+    Name = "dev-practice-jp-subnet",
+    Owner = "JP"
+  }
+}
+
+resource "aws_instance" "dev-practice-jp" {
   ami = "ami-8803e0f0"
   instance_type = "t2.micro"
-  subnet_id = "subnet-3baf2473"
-  availability_zone = "us-west-2b"
+  subnet_id = "${aws_subnet.dev-practice-jp-subnet.id}"
+  availability_zone = "us-west-2a"
   vpc_security_group_ids = ["sg-d33271ae", "sg-a42c6fd9"]
   associate_public_ip_address = "true"
-  key_name = "dev-practice-01-jp"
+  key_name = "${aws_key_pair.dev-practice-jp-ssh.id}"
   tags {
-    Name = "dev-practice-02-jp",
+    Name = "dev-practice-jp",
     Owner = "JP"
   }
 }
