@@ -11,6 +11,7 @@ resource "aws_key_pair" "dev-practice-jp-ssh" {
 
 resource "aws_vpc" "dev-practice-jp-vpc" {
   cidr_block = "172.16.0.0/16"
+  enable_dns_hostnames = true
   tags {
     Name = "dev-practice-jp-vpc",
     Owner = "JP"
