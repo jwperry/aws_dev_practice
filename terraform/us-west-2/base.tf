@@ -42,6 +42,31 @@ resource "aws_security_group" "dev-practice-jp-ssh-in" {
   }
 }
 
+resource "aws_security_group" "dev-practice-jp-vpc-transit" {
+  name = "dev-practice-jp-vpc-transit"
+  description = "Intra-VPC traffic rules"
+  vpc_id = "${aws_vpc.dev-practice-jp-vpc.id}"
+
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    self = true
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags {
+    Name = "dev-practice-jp-vpc-transit",
+    Owner = "JP"
+  }
+}
+
 resource "aws_subnet" "dev-practice-jp-subnet" {
   vpc_id = "${aws_vpc.dev-practice-jp-vpc.id}"
   cidr_block = "172.16.10.0/24"
@@ -57,7 +82,7 @@ resource "aws_instance" "dev-practice-jp" {
   instance_type = "t2.micro"
   subnet_id = "${aws_subnet.dev-practice-jp-subnet.id}"
   availability_zone = "us-west-2a"
-  vpc_security_group_ids = ["${aws_security_group.dev-practice-jp-ssh-in.id}"]
+  vpc_security_group_ids = ["${aws_security_group.dev-practice-jp-ssh-in.id}", "${aws_security_group.dev-practice-jp-vpc-transit.id}"]
   associate_public_ip_address = "true"
   key_name = "${aws_key_pair.dev-practice-jp-ssh.id}"
   tags {
