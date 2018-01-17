@@ -41,6 +41,11 @@ resource "aws_route_table" "dev-practice-jp-route-table" {
   }
 }
 
+resource "aws_main_route_table_association" "us-west-2-nat-assoc" {
+  vpc_id = "${aws_vpc.dev-practice-jp-vpc.id}"
+  route_table_id = "${aws_route_table.dev-practice-jp-route-table.id}"
+}
+
 resource "aws_security_group" "dev-practice-jp-ssh-in" {
   name = "dev-practice-jp-ssh-in"
   description = "Allow inbound SSH traffic"
