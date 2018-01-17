@@ -18,6 +18,29 @@ resource "aws_vpc" "dev-practice-jp-vpc" {
   }
 }
 
+resource "aws_internet_gateway" "dev-practice-jp-igw" {
+  vpc_id = "${aws_vpc.dev-practice-jp-vpc.id}"
+
+  tags {
+    Name = "dev-practice-jp-igw",
+    Owner = "JP"
+  }
+}
+
+resource "aws_route_table" "dev-practice-jp-route-table" {
+  vpc_id = "${aws_vpc.dev-practice-jp-vpc.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.dev-practice-jp-igw.id}"
+  }
+
+  tags {
+    Name = "dev-practice-jp-route-table",
+    Owner = "JP"
+  }
+}
+
 resource "aws_security_group" "dev-practice-jp-ssh-in" {
   name = "dev-practice-jp-ssh-in"
   description = "Allow inbound SSH traffic"
