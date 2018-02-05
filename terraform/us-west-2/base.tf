@@ -106,10 +106,6 @@ resource "aws_subnet" "dev-practice-jp-subnet" {
   }
 }
 
-variable "instances" {
-  default= ["01", "02", "03", "04", "05"]
-}
-
 resource "aws_instance" "dev-practice-jp" {
   count = 5
   ami = "ami-8803e0f0"
@@ -123,13 +119,11 @@ resource "aws_instance" "dev-practice-jp" {
     Name = "dev-practice-jp-0${count.index + 1}",
     Owner = "JP"
   }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt-get update",
-      "DEBIAN_FRONTEND=noninteractive sudo -E apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confnew' upgrade",
-      "sudo apt-get install python -y",
-      "echo dev-practice-jp-0${count.index + 1} | sudo tee /etc/hostname > /dev/null",
-      "sudo reboot"
-    ]
-  }
+  user_data = <<EOF
+sudo apt-get update
+DEBIAN_FRONTEND=noninteractive sudo -E apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confnew' upgrade
+sudo apt-get install python -y
+echo dev-practice-jp-0${count.index + 1} | sudo tee /etc/hostname > /dev/null
+sudo reboot
+EOF
 }
