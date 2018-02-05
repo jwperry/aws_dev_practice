@@ -122,7 +122,8 @@ resource "aws_instance" "dev-practice-jp" {
   user_data = <<EOF
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo -E apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confnew' upgrade
-sudo apt-get install python -y
+sudo apt update
+sudo apt install python2.7 -y
 echo dev-practice-jp-0${count.index + 1} | sudo tee /etc/hostname > /dev/null
 sudo reboot
 EOF
