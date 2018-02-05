@@ -123,4 +123,13 @@ resource "aws_instance" "dev-practice-jp" {
     Name = "dev-practice-jp-0${count.index + 1}",
     Owner = "JP"
   }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get update",
+      "DEBIAN_FRONTEND=noninteractive sudo -E apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confnew' upgrade",
+      "sudo apt-get install python -y",
+      "echo dev-practice-jp-0${count.index + 1} | sudo tee /etc/hostname > /dev/null",
+      "sudo reboot"
+    ]
+  }
 }
