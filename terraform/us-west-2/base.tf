@@ -106,7 +106,7 @@ resource "aws_subnet" "dev-practice-jp-subnet" {
   }
 }
 
-resource "aws_instance" "dev-practice-jp" {
+resource "aws_instance" "dev-practice-jp-01" {
   ami = "ami-8803e0f0"
   instance_type = "t2.micro"
   subnet_id = "${aws_subnet.dev-practice-jp-subnet.id}"
@@ -115,7 +115,63 @@ resource "aws_instance" "dev-practice-jp" {
   associate_public_ip_address = "true"
   key_name = "${aws_key_pair.dev-practice-jp-ssh.id}"
   tags {
-    Name = "dev-practice-jp",
+    Name = "dev-practice-jp-01",
+    Owner = "JP"
+  }
+}
+
+resource "aws_instance" "dev-practice-jp-02" {
+  ami = "ami-8803e0f0"
+  instance_type = "t2.micro"
+  subnet_id = "${aws_subnet.dev-practice-jp-subnet.id}"
+  availability_zone = "us-west-2a"
+  vpc_security_group_ids = ["${aws_security_group.dev-practice-jp-ssh-in.id}", "${aws_security_group.dev-practice-jp-vpc-transit.id}"]
+  associate_public_ip_address = "true"
+  key_name = "${aws_key_pair.dev-practice-jp-ssh.id}"
+  tags {
+    Name = "dev-practice-jp-02",
+    Owner = "JP"
+  }
+}
+
+resource "aws_instance" "dev-practice-jp-03" {
+  ami = "ami-8803e0f0"
+  instance_type = "t2.micro"
+  subnet_id = "${aws_subnet.dev-practice-jp-subnet.id}"
+  availability_zone = "us-west-2a"
+  vpc_security_group_ids = ["${aws_security_group.dev-practice-jp-ssh-in.id}", "${aws_security_group.dev-practice-jp-vpc-transit.id}"]
+  associate_public_ip_address = "true"
+  key_name = "${aws_key_pair.dev-practice-jp-ssh.id}"
+  tags {
+    Name = "dev-practice-jp-03",
+    Owner = "JP"
+  }
+}
+
+resource "aws_instance" "dev-practice-jp-04" {
+  ami = "ami-8803e0f0"
+  instance_type = "t2.micro"
+  subnet_id = "${aws_subnet.dev-practice-jp-subnet.id}"
+  availability_zone = "us-west-2a"
+  vpc_security_group_ids = ["${aws_security_group.dev-practice-jp-ssh-in.id}", "${aws_security_group.dev-practice-jp-vpc-transit.id}"]
+  associate_public_ip_address = "true"
+  key_name = "${aws_key_pair.dev-practice-jp-ssh.id}"
+  tags {
+    Name = "dev-practice-jp-04",
+    Owner = "JP"
+  }
+}
+
+resource "aws_instance" "dev-practice-jp-05" {
+  ami = "ami-8803e0f0"
+  instance_type = "t2.micro"
+  subnet_id = "${aws_subnet.dev-practice-jp-subnet.id}"
+  availability_zone = "us-west-2a"
+  vpc_security_group_ids = ["${aws_security_group.dev-practice-jp-ssh-in.id}", "${aws_security_group.dev-practice-jp-vpc-transit.id}"]
+  associate_public_ip_address = "true"
+  key_name = "${aws_key_pair.dev-practice-jp-ssh.id}"
+  tags {
+    Name = "dev-practice-jp-05",
     Owner = "JP"
   }
 }
