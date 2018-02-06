@@ -130,7 +130,8 @@ resource "aws_instance" "dev-practice-jp" {
       "DEBIAN_FRONTEND=noninteractive sudo -E apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confnew' upgrade",
       "sudo apt update",
       "sudo apt install python -y",
-      "echo dev-practice-jp-0${count.index + 1} | sudo tee /etc/hostname > /dev/null"
+      "echo dev-practice-jp-0${count.index + 1} | sudo tee /etc/hostname > /dev/null",
+      "sudo reboot"
     ]
   }
 }
